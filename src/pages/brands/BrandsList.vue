@@ -3,12 +3,21 @@
     <base-card>
       <brands-registration></brands-registration>
     </base-card>
-    <brand-item
-      v-for="brand in filteredBrands"
-      :key="brand.id"
-      :name="brand.name"
-      :description="brand.description"
-    ></brand-item>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 offset-md-1">
+          <h2>List of Registered Brands:</h2>
+        </div>
+      </div>
+    </div>
+    <ul>
+      <brand-item
+        v-for="brand in filteredBrands"
+        :key="brand.id"
+        :name="brand.name"
+        :description="brand.description"
+      ></brand-item>
+    </ul>
   </section>
 </template>
 
@@ -31,7 +40,7 @@ export default {
   },
   computed: {
     filteredBrands() {
-      return this.$store.getters.brands;
+      return this.$store.getters["brands/brands"];
     },
   },
   methods: {
@@ -47,4 +56,9 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 </style>

@@ -1,10 +1,14 @@
 import { createStore } from "vuex";
 
 import brandsModule from "./modules/brands/index.js";
+import ownersModule from "./modules/owners/index.js";
+import modelsModule from "./modules/models/index.js";
 
 const store = createStore({
-    models: {
-        brands: brandsModule
+    modules: {
+        brands: brandsModule,
+        owners: ownersModule,
+        models: modelsModule,
     }
 });
 
