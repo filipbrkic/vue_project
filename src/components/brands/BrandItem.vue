@@ -11,15 +11,12 @@
 </template>
 
 <script>
-import BaseCard from "../ui/BaseCard.vue";
 export default {
-  emits: ["delete-brand"],
-  components: { BaseCard },
   props: ["id", "name", "description"],
   methods: {
     removeBrand(index) {
       try {
-        this.$store.dispatch(`brands/removeBrand`, index);
+        this.$store.dispatch("brands/removeBrand", index);
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }

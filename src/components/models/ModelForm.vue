@@ -7,7 +7,7 @@
         class="form-control"
         id="name"
         v-model.trim="name.val"
-        placeholder="Enter name"
+        placeholder="Enter Name"
       />
     </div>
     <div class="form-group">
@@ -18,7 +18,7 @@
         id="description"
         row="5"
         v-model.trim="description.val"
-        placeholder="Enter description"
+        placeholder="Enter Description"
       ></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

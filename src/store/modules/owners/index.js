@@ -9,8 +9,8 @@ export default {
             owners: [
                 {
                     id: "",
-                    first_name: "",
-                    last_name: "",
+                    firstName: "",
+                    lastName: "",
                 }
             ]
         }
