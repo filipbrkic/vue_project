@@ -8,5 +8,8 @@ export default {
     removeBrand(state, payload) {
         const index = state.brands.findIndex(brand => brand.id === payload);
         state.brands.splice(index, 1);
-    }
+    },
+    updateBrand(state, payload) {
+        state.brands.push(payload);
+    },
 };

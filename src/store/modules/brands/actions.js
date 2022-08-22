@@ -54,4 +54,28 @@ export default {
 
         context.commit("removeBrand", index);
     },
+    async updateBrand(context, data) {
+        var bodyFormData = new FormData();
+        bodyFormData.append('id', data.id);
+        bodyFormData.append('name', data.name);
+        bodyFormData.append('description', data.description);
+
+        console.log()
+
+        const response = await fetch(`http://127.0.0.1:8080/brands`, {
+            method: "PUT",
+            body: bodyFormData
+        });
+
+        if (!response.ok) {
+            const error = new Error("Failed to update a brand!");
+            throw error;
+        }
+        context.commit('removeBrand', {
+            ...data.id
+        });
+        context.commit("updateBrand", {
+            ...await response.json()
+        });
+    }
 };

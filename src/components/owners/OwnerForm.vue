@@ -1,31 +1,29 @@
 <template>
   <form @submit.prevent="submitForm">
     <div class="form-group" :class="{ invalid: !firstName.isValid }">
-      <label for="firstName">First Name</label>
+      <label for="firstName">First Name:</label>
       <input
         type="firstName"
         class="form-control"
         id="firstName"
-        v-on:keyup.enter="submitForm"
-        v-model.trim="firstName.val"
+        v-model="firstName.val"
         placeholder="Enter First Name"
         @blur="clearValidity('firstName')"
-      />
-      <p v-if="!firstName.isValid">First Name must not be empty.</p>
+      />  
     </div>
+    <p v-if="!firstName.isValid">First Name must not be empty.</p>
     <div class="form-group" :class="{ invalid: !lastName.isValid }">
       <label for="lastName">Last Name</label>
       <input
         type="lastName"
         class="form-control"
         id="lastName"
-        v-on:keyup.enter="submitForm"
-        v-model.trim="lastName.val"
+        v-model="lastName.val"
         placeholder="Enter Last Name"
         @blur="clearValidity('lastName')"
       />
-      <p v-if="!lastName.isValid">Last Name must not be empty.</p>
     </div>
+    <p v-if="!lastName.isValid">Last Name must not be empty.</p>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </template>
@@ -57,12 +55,15 @@ export default {
     validateForm() {
       this.formIsValid = true;
       if (this.firstName.val === "") {
+        console.log(this.firstName.val)
         this.firstName.isValid = false;
         this.formIsValid = false;
+        return;
       }
       if (this.lastName.val === "") {
         this.lastName.isValid = false;
         this.formIsValid = false;
+        return;
       }
     },
     submitForm() {
