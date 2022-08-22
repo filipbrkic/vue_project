@@ -19,5 +19,6 @@ export default {
 
 body {
   margin-top: 6%;
+  background-color: rgb(34, 34, 34);
 }
 </style>

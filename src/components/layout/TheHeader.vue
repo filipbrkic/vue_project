@@ -60,7 +60,7 @@
 
 <style scoped>
 nav {
-  background-color: rgb(213, 155, 213);
+  background-color: rgb(164, 189, 244);
 }
 
 .navbar-brand {
@@ -74,7 +74,7 @@ nav {
 
 .navbar-scroll .nav-link,
 .navbar-scroll .fa-bars {
-  color: #7f4722;
+  color: #000000;
 }
 
 .navbar-scrolled .nav-link,

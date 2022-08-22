@@ -3,16 +3,16 @@
     <base-card>
       <owners-registration></owners-registration>
     </base-card>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-5 offset-md-1">
-          <h2>List of Vehicle Owners:</h2>
+    <base-card>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h2>List of Vehicle Owners:</h2>
+          </div>
         </div>
       </div>
-    </div>
-    <ul>
-
-    </ul>
+      <ul></ul>
+    </base-card>
   </section>
 </template>
 
@@ -20,9 +20,9 @@
 import OwnersRegistration from "./OwnersRegistration.vue";
 
 export default {
-    components: {
-        OwnersRegistration,
-    }
+  components: {
+    OwnersRegistration,
+  },
 };
 </script>
 

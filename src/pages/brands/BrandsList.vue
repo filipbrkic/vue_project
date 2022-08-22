@@ -3,21 +3,24 @@
     <base-card>
       <brands-registration></brands-registration>
     </base-card>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-5 offset-md-1">
-          <h2>List of Registered Brands:</h2>
+    <base-card>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <h2>List of Registered Brands:</h2>
+          </div>
         </div>
       </div>
-    </div>
-    <ul>
-      <brand-item
-        v-for="brand in filteredBrands"
-        :key="brand.id"
-        :name="brand.name"
-        :description="brand.description"
-      ></brand-item>
-    </ul>
+      <ul>
+        <brand-item
+          v-for="brand in brands"
+          :key="brand.id"
+          :id="brand.id"
+          :name="brand.name"
+          :description="brand.description"
+        ></brand-item>
+      </ul>
+    </base-card>
   </section>
 </template>
 
@@ -33,15 +36,12 @@ export default {
   data() {
     return {
       error: null,
+      brands: []
     };
   },
-  created() {
-    this.loadBrands();
-  },
-  computed: {
-    filteredBrands() {
-      return this.$store.getters["brands/brands"];
-    },
+  async mounted() {
+    await this.loadBrands();
+    this.filteredBrands();
   },
   methods: {
     async loadBrands() {
@@ -50,6 +50,9 @@ export default {
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
+    },
+    filteredBrands() {
+      this.brands = this.$store.getters["brands/brands"];
     },
   },
 };

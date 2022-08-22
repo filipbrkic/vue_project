@@ -4,6 +4,17 @@ import getters from "./getters";
 
 export default {
     namespaced: true,
+    state() {
+        return {
+            brands: [
+                {
+                    id: "",
+                    name: "",
+                    description: "",
+                }
+            ]
+        }
+    },
     mutations,
     actions,
     getters

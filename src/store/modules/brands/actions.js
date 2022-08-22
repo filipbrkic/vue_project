@@ -1,27 +1,24 @@
 export default {
     async registerBrand(context, data) {
-        const brandData = {
-            name: data.name,
-            description: data.description,
-        }
-
-        const response = await fetch("https://vue-http-demo-2bdd1-default-rtdb.europe-west1.firebasedatabase.app/brands.json", {
+        var bodyFormData = new FormData();
+        bodyFormData.append('name', data.name);
+        bodyFormData.append('description', data.description);
+        const response = await fetch("http://127.0.0.1:8080/brands", {
             method: "POST",
-            body: JSON.stringify(brandData)
+            body: bodyFormData,
         });
 
         if (!response.ok) {
-            const error = new Error();
+            const error = new Error("Failed to create a brand!");
             throw error;
         }
-
         context.commit("registerBrand", {
-            ...brandData
+            ...await response.json()
         });
     },
 
     async loadBrands(context) {
-        const response = await fetch("https://vue-http-demo-2bdd1-default-rtdb.europe-west1.firebasedatabase.app/brands.json");
+        const response = await fetch("http://127.0.0.1:8080/brands");
 
         const responseData = await response.json();
 
@@ -34,7 +31,7 @@ export default {
 
         for (const key in responseData) {
             const brand = {
-                id: key,
+                id: responseData[key].id,
                 name: responseData[key].name,
                 description: responseData[key].description
             }
@@ -43,5 +40,18 @@ export default {
         }
 
         context.commit("setBrands", brands);
-    }
+    },
+
+    async removeBrand(context, index) {
+        const response = await fetch(`http://127.0.0.1:8080/brands/${index}`, {
+            method: "DELETE",
+        });
+
+        if (!response.ok) {
+            const error = new Error("Failed to delete a brand!");
+            throw error;
+        }
+
+        context.commit("removeBrand", index);
+    },
 };

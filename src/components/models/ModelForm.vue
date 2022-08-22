@@ -1,24 +1,25 @@
 <template>
   <form @submit.prevent="submitForm">
     <div class="form-group">
-      <label for="firstName">First Name</label>
+      <label for="name">Name</label>
       <input
-        type="firstName"
+        type="name"
         class="form-control"
-        id="firstName"
-        v-model.trim="firstName.val"
-        placeholder="Enter First Name"
+        id="name"
+        v-model.trim="name.val"
+        placeholder="Enter name"
       />
     </div>
     <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input
-        type="lastName"
+      <label for="description">Description</label>
+      <textarea
+        type="description"
         class="form-control"
-        id="lastName"
-        v-model.trim="lastName.val"
-        placeholder="Enter Last Name"
-      />
+        id="description"
+        row="5"
+        v-model.trim="description.val"
+        placeholder="Enter description"
+      ></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
@@ -26,15 +27,15 @@
 
 <script>
 export default {
-  emits: ["save-owner-data"],
+  emits: ["save-model-data"],
   data() {
     return {
-      firstName: {
+      name: {
         val: "",
         type: String,
         required: true,
       },
-      lastName: {
+      description: {
         val: "",
         type: String,
         required: true,
@@ -44,11 +45,11 @@ export default {
   methods: {
     submitForm() {
       const formData = {
-        firstName: this.firstName.val,
-        lastName: this.lastName.val,
+        name: this.name.val,
+        description: this.description.val,
       };
 
-      this.$emit("save-owner-data", formData);
+      this.$emit("save-data", formData);
     },
   },
 };
