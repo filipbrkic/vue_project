@@ -27,7 +27,7 @@
       ></textarea>
       <p v-if="!description.isValid">Description must not be empty.</p>
     </div>
-    <button type="submit" class="btn btn-primary" @click="close">Update</button>
+    <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </template>
 
@@ -55,11 +55,6 @@ export default {
       },
       formIsValid: true,
     };
-  },
-  computed: {
-    close() {
-      return this.$emit('close')
-    }
   },
   methods: {
     clearValidity(input) {
