@@ -6,6 +6,7 @@
         type="firstName"
         class="form-control"
         id="firstName"
+        v-on:keyup.enter="submitForm"
         v-model.trim="firstName.val"
         placeholder="Enter First Name"
         @blur="clearValidity('firstName')"
@@ -18,6 +19,7 @@
         type="lastName"
         class="form-control"
         id="lastName"
+        v-on:keyup.enter="submitForm"
         v-model.trim="lastName.val"
         placeholder="Enter Last Name"
         @blur="clearValidity('lastName')"
@@ -69,12 +71,16 @@ export default {
       if (!this.formIsValid) {
         return;
       }
+
       const formData = {
         firstName: this.firstName.val,
         lastName: this.lastName.val,
       };
 
       this.$emit("save-owner-data", formData);
+
+      this.firstName.val = "";
+      this.lastName.val = "";
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2>Register Vehicle Model</h2>
-    <model-form @save-mode-data="model"></model-form>
+    <model-form @save-model-data="model"></model-form>
   </section>
 </template>
 

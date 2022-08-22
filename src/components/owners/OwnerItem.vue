@@ -4,7 +4,6 @@
       <h3>First Name: {{ firstName }}</h3>
       <h4>Last Name: {{ lastName }}</h4>
     </li>
-    {{id}}
     <button type="button" class="btn btn-danger" @click="removeOwner(id)">
       Delete
     </button>

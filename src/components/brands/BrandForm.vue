@@ -6,12 +6,13 @@
         type="name"
         class="form-control"
         id="name"
+        v-on:keyup.enter="submitForm"
         v-model.trim="name.val"
         placeholder="Enter Name"
         @blur="clearValidity('name')"
       />
+      <p v-if="!name.isValid">Name must not be empty.</p>
     </div>
-    <p v-if="!name.isValid">Name must not be empty.</p>
     <div class="form-group" :class="{ invalid: !description.isValid }">
       <label for="description">Description</label>
       <textarea
@@ -19,6 +20,7 @@
         class="form-control"
         id="description"
         row="5"
+        v-on:keyup.enter="submitForm"
         v-model.trim="description.val"
         placeholder="Enter Description"
         @blur="clearValidity('description')"
@@ -77,6 +79,9 @@ export default {
       };
 
       this.$emit("save-data", formData);
+
+      this.name.val = "";
+      this.description.val = "";
     },
   },
 };
