@@ -8,5 +8,8 @@ export default {
     removeOwner(state, payload) {
         const index = state.owners.findIndex(owner => owner.id === payload);
         state.owners.splice(index, 1);
-    }
+    },
+    updateOwner(state, payload) {
+        state.owners.push(payload);
+    },
 };

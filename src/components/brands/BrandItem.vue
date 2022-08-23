@@ -15,7 +15,7 @@
       <button
         id="show-modal"
         type="button"
-        class="btn btn-warning float-end"
+        class="btn btn-primary float-end"
         @click="showModal = true"
       >
         Edit
@@ -25,8 +25,6 @@
           <brand-update
             :key="id"
             :propId="id"
-            :propName="name"
-            :propDescription="description"
             @close="showModal = false"
           ></brand-update>
         </base-modal>

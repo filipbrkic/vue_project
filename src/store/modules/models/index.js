@@ -4,17 +4,6 @@ import getters from "./getters";
 
 export default {
     namespaced: true,
-    state() {
-        return {
-            models: [
-                {
-                    id: "",
-                    name: "",
-                    description: "",
-                }
-            ]
-        }
-    },
     mutations,
     actions,
     getters

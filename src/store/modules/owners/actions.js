@@ -21,12 +21,12 @@ export default {
         const response = await fetch("http://127.0.0.1:8080/owners");
 
         const responseData = await response.json();
-
+        
         if (!response.ok) {
             const error = new Error(responseData.message || "Failed to fetch!");
             throw error;
         }
-
+        
         const owners = [];
 
         for (const key in responseData) {
@@ -54,4 +54,27 @@ export default {
 
         context.commit("removeOwner", index);
     },
+
+    async updateOwner(context, data) {
+        var bodyFormData = new FormData();
+        bodyFormData.append('id', data.id);
+        bodyFormData.append('first_name', data.firstName);
+        bodyFormData.append('last_name', data.lastName);
+
+        const response = await fetch(`http://127.0.0.1:8080/owners`, {
+            method: "PUT",
+            body: bodyFormData
+        });
+
+        if (!response.ok) {
+            const error = new Error("Failed to update a owner!");
+            throw error;
+        }
+        context.commit('removeOwner', {
+            ...data.id
+        });
+        context.commit("updateOwner", {
+            ...await response.json()
+        });
+    }
 };

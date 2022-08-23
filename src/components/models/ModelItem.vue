@@ -12,13 +12,40 @@
       >
         Delete
       </button>
+      <button
+        id="show-modal"
+        type="button"
+        class="btn btn-primary float-end"
+        @click="showModal = true"
+      >
+        Edit
+      </button>
+      <Teleport to="body">
+        <base-modal :show="showModal" @close="showModal = false">
+          <model-update
+            :key="id"
+            :propId="id"
+            @close="showModal = false"
+          ></model-update>
+        </base-modal>
+      </Teleport>
     </div>
   </base-card>
 </template>
 
 <script>
+import ModelUpdate from "./ModelUpdate.vue";
+
 export default {
   props: ["id", "name", "description"],
+  components: {
+    ModelUpdate,
+  },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
   methods: {
     removeModel(index) {
       try {

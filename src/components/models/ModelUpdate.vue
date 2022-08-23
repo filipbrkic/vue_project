@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  emits: ["update-brand-data", "close"],
+  emits: ["update-model-data", "close"],
   props: ["propId"],
   data() {
     return {
@@ -84,7 +84,7 @@ export default {
         description: this.description.val,
       };
 
-      this.$store.dispatch("brands/updateBrand", formData);
+      this.$store.dispatch("models/updateModel", formData);
 
       this.name.val = "";
       this.description.val = "";

@@ -20,7 +20,7 @@ export default {
     async loadModels(context) {
         const response = await fetch("http://127.0.0.1:8080/models");
 
-        const responseData = await response.json(); 
+        const responseData = await response.json();
 
         if (!response.ok) {
             const error = new Error(responseData.message || "Failed to fetch!");
@@ -54,4 +54,27 @@ export default {
 
         context.commit("removeModel", index);
     },
+
+    async updateModel(context, data) {
+        var bodyFormData = new FormData();
+        bodyFormData.append('id', data.id);
+        bodyFormData.append('name', data.name);
+        bodyFormData.append('description', data.description);
+
+        const response = await fetch(`http://127.0.0.1:8080/models`, {
+            method: "PUT",
+            body: bodyFormData
+        });
+
+        if (!response.ok) {
+            const error = new Error("Failed to update a model!");
+            throw error;
+        }
+        context.commit('removeModel', {
+            ...data.id
+        });
+        context.commit("updateModel", {
+            ...await response.json()
+        });
+    }
 };

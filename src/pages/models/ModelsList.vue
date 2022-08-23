@@ -11,7 +11,10 @@
           </div>
         </div>
       </div>
-      <ul>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasModels">
         <model-item
           v-for="model in models"
           :key="model.id"
@@ -20,6 +23,9 @@
           :description="model.description"
         ></model-item>
       </ul>
+      <div v-else class="container">
+        <h5>No Models found.</h5>
+      </div>
     </base-card>
   </section>
 </template>
@@ -37,6 +43,7 @@ export default {
     return {
       error: null,
       models: [],
+      isLoading: false,
     };
   },
   async mounted() {
@@ -45,14 +52,21 @@ export default {
   },
   methods: {
     async loadModels() {
+      this.isLoading = true;
       try {
         await this.$store.dispatch("models/loadModels");
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
+      this.isLoading = false;
     },
     filteredModels() {
       this.models = this.$store.getters["models/models"];
+    },
+  },
+  computed: {
+    hasModels() {
+      return !this.isLoading && this.$store.getters["models/hasModels"];
     },
   },
 };

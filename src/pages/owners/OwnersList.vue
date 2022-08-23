@@ -6,12 +6,15 @@
     <base-card>
       <div class="container">
         <div class="row">
-          <div class="col-md-7">
-            <h2>List of Vehicle Owners:</h2>
+          <div class="col-md-12">
+            <h2>List of Registered Vehicle Owners:</h2>
           </div>
         </div>
       </div>
-      <ul>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasOwners">
         <owner-item
           v-for="owner in owners"
           :key="owner.id"
@@ -20,6 +23,9 @@
           :lastName="owner.last_name"
         ></owner-item>
       </ul>
+      <div v-else class="container">
+        <h5>No Registered Owners found.</h5>
+      </div>
     </base-card>
   </section>
 </template>
@@ -36,7 +42,8 @@ export default {
   data() {
     return {
       error: null,
-      owners: []
+      owners: [],
+      isLoading: false,
     };
   },
   async mounted() {
@@ -45,16 +52,23 @@ export default {
   },
   methods: {
     async loadOwners() {
+      this.isLoading = true;
       try {
         await this.$store.dispatch("owners/loadOwners");
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
+      this.isLoading = false;
     },
     filteredOwners() {
       this.owners = this.$store.getters["owners/owners"];
     },
   },
+  computed: {
+    hasOwners() {
+      return !this.isLoading && this.$store.getters["owners/hasOwners"];
+    }
+  }
 };
 </script>
 

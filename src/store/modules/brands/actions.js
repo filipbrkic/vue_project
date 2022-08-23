@@ -20,7 +20,7 @@ export default {
     async loadBrands(context) {
         const response = await fetch("http://127.0.0.1:8080/brands");
 
-        const responseData = await response.json(); 
+        const responseData = await response.json();
 
         if (!response.ok) {
             const error = new Error(responseData.message || "Failed to fetch!");
@@ -59,8 +59,6 @@ export default {
         bodyFormData.append('id', data.id);
         bodyFormData.append('name', data.name);
         bodyFormData.append('description', data.description);
-
-        console.log()
 
         const response = await fetch(`http://127.0.0.1:8080/brands`, {
             method: "PUT",

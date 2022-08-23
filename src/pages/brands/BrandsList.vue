@@ -11,7 +11,10 @@
           </div>
         </div>
       </div>
-      <ul>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasBrands">
         <brand-item
           v-for="brand in brands"
           :key="brand.id"
@@ -20,6 +23,9 @@
           :description="brand.description"
         ></brand-item>
       </ul>
+      <div v-else class="container">
+        <h5>No Brands found.</h5>
+      </div>
     </base-card>
   </section>
 </template>
@@ -36,7 +42,8 @@ export default {
   data() {
     return {
       error: null,
-      brands: []
+      brands: [],
+      isLoading: false,
     };
   },
   async mounted() {
@@ -45,14 +52,21 @@ export default {
   },
   methods: {
     async loadBrands() {
+      this.isLoading = true;
       try {
         await this.$store.dispatch("brands/loadBrands");
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
+      this.isLoading = false;
     },
     filteredBrands() {
       this.brands = this.$store.getters["brands/brands"];
+    },
+  },
+  computed: {
+    hasBrands() {
+      return !this.isLoading && this.$store.getters["brands/hasBrands"];
     },
   },
 };
