@@ -24,7 +24,7 @@
       />
     </div>
     <p v-if="!lastName.isValid">Last Name must not be empty.</p>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" @click="close">Submit</button>
   </form>
 </template>
 
@@ -54,6 +54,9 @@ export default {
     };
   },
   methods: {
+    close() {
+      return this.$emit("close");
+    },
     clearValidity(input) {
       this[input].isValid = true;
     },

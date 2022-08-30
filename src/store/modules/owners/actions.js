@@ -17,19 +17,19 @@ export default {
         }
         context.commit("registerOwner", {
             ...await response.json()
-        }); 
+        });
     },
 
     async loadOwners(context) {
         const response = await fetch("http://127.0.0.1:8080/owners");
 
         const responseData = await response.json();
-        
+
         if (!response.ok) {
             const error = new Error(responseData.message);
             throw error;
         }
-        
+
         const owners = [];
 
         for (const key in responseData) {

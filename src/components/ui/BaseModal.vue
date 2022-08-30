@@ -1,16 +1,3 @@
-<script>
-export default {
-  props: {
-    show: Boolean,
-  },
-  computed: {
-    close() {
-      return this.$emit("close");
-    },
-  },
-};
-</script>
-
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
@@ -27,6 +14,19 @@ export default {
     </div>
   </Transition>
 </template>
+
+<script>
+export default {
+  props: {
+    show: Boolean,
+  },
+  methods: {
+    close() {
+      return this.$emit("close");
+    },
+  },
+};
+</script>
 
 <style>
 .modal-mask {
