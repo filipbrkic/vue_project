@@ -9,7 +9,7 @@ describe('Models', () => {
       name: "cypress",
       description: "cypress"
     });
-    // cy.request("DELETE", "http://127.0.0.1:8080/models/102"); // works only once
+    // cy.request("DELETE", "http://127.0.0.1:8080/models/49"); // works only once
   })
   it('successfully loads', () => {
     cy.visit('/models');
