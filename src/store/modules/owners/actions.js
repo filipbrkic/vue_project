@@ -1,15 +1,18 @@
 export default {
     async registerOwner(context, data) {
-        var bodyFormData = new FormData();
-        bodyFormData.append('first_name', data.firstName);
-        bodyFormData.append('last_name', data.lastName);
+        const owner = {
+            first_name: data.firstName,
+            last_name: data.lastName
+        };
+
         const response = await fetch("http://127.0.0.1:8080/owners", {
             method: "POST",
-            body: bodyFormData,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(owner),
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to create an owner!");
+            const error = new Error(response.message);
             throw error;
         }
         context.commit("registerOwner", {
@@ -23,7 +26,7 @@ export default {
         const responseData = await response.json();
         
         if (!response.ok) {
-            const error = new Error(responseData.message || "Failed to fetch!");
+            const error = new Error(responseData.message);
             throw error;
         }
         
@@ -48,7 +51,7 @@ export default {
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to delete a woner!");
+            const error = new Error(response.message);
             throw error;
         }
 
@@ -56,25 +59,29 @@ export default {
     },
 
     async updateOwner(context, data) {
-        var bodyFormData = new FormData();
-        bodyFormData.append('id', data.id);
-        bodyFormData.append('first_name', data.firstName);
-        bodyFormData.append('last_name', data.lastName);
+        const owner = {
+            id: data.id,
+            first_name: data.firstName,
+            last_name: data.lastName
+        };
 
-        const response = await fetch(`http://127.0.0.1:8080/owners`, {
+        const response = await fetch(`http://127.0.0.1:8080/owners/${owner.id}`, {
             method: "PUT",
-            body: bodyFormData
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(owner)
         });
 
+        const responseData = await response.json();
+
         if (!response.ok) {
-            const error = new Error("Failed to update a owner!");
+            const error = new Error(responseData.message);
             throw error;
         }
         context.commit('removeOwner', {
-            ...data.id
+            ...owner.id
         });
         context.commit("updateOwner", {
-            ...await response.json()
+            ...owner
         });
     }
 };

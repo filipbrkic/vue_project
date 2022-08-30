@@ -83,7 +83,7 @@ export default {
         name: this.name.val,
         description: this.description.val,
       };
-
+      
       this.$store.dispatch("brands/updateBrand", formData);
 
       this.name.val = "";

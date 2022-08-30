@@ -1,15 +1,18 @@
 export default {
     async registerBrand(context, data) {
-        var bodyFormData = new FormData();
-        bodyFormData.append('name', data.name);
-        bodyFormData.append('description', data.description);
+        const brand = {
+            name: data.name,
+            description: data.description
+        };
+
         const response = await fetch("http://127.0.0.1:8080/brands", {
             method: "POST",
-            body: bodyFormData,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(brand),
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to create a brand!");
+            const error = new Error(response.message);
             throw error;
         }
         context.commit("registerBrand", {
@@ -23,7 +26,7 @@ export default {
         const responseData = await response.json();
 
         if (!response.ok) {
-            const error = new Error(responseData.message || "Failed to fetch!");
+            const error = new Error(responseData.message);
             throw error;
         }
 
@@ -48,32 +51,35 @@ export default {
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to delete a brand!");
+            const error = new Error(response.message);
             throw error;
         }
 
         context.commit("removeBrand", index);
     },
-    async updateBrand(context, data) {
-        var bodyFormData = new FormData();
-        bodyFormData.append('id', data.id);
-        bodyFormData.append('name', data.name);
-        bodyFormData.append('description', data.description);
 
-        const response = await fetch(`http://127.0.0.1:8080/brands`, {
+    async updateBrand(context, data) {
+        const brand = {
+            id: data.id,
+            name: data.name,
+            description: data.description
+        };
+
+        const response = await fetch(`http://127.0.0.1:8080/brands/${brand.id}`, {
             method: "PUT",
-            body: bodyFormData
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(brand)
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to update a brand!");
+            const error = new Error(response.message);
             throw error;
         }
         context.commit('removeBrand', {
-            ...data.id
+            ...brand.id
         });
         context.commit("updateBrand", {
-            ...await response.json()
+            ...brand
         });
     }
 };

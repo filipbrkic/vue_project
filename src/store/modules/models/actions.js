@@ -1,15 +1,18 @@
 export default {
     async registerModel(context, data) {
-        var bodyFormData = new FormData();
-        bodyFormData.append('name', data.name);
-        bodyFormData.append('description', data.description);
+        const model = {
+            name: data.name,
+            description: data.description
+        };
+
         const response = await fetch("http://127.0.0.1:8080/models", {
             method: "POST",
-            body: bodyFormData,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(model),
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to create a model!");
+            const error = new Error(response.message);
             throw error;
         }
         context.commit("registerModel", {
@@ -23,7 +26,7 @@ export default {
         const responseData = await response.json();
 
         if (!response.ok) {
-            const error = new Error(responseData.message || "Failed to fetch!");
+            const error = new Error(responseData.message);
             throw error;
         }
 
@@ -48,7 +51,7 @@ export default {
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to delete a model!");
+            const error = new Error(response.message);
             throw error;
         }
 
@@ -56,25 +59,27 @@ export default {
     },
 
     async updateModel(context, data) {
-        var bodyFormData = new FormData();
-        bodyFormData.append('id', data.id);
-        bodyFormData.append('name', data.name);
-        bodyFormData.append('description', data.description);
+        const model = {
+            id: data.id,
+            name: data.name,
+            description: data.description
+        };
 
-        const response = await fetch(`http://127.0.0.1:8080/models`, {
+        const response = await fetch(`http://127.0.0.1:8080/models/${model.id}`, {
             method: "PUT",
-            body: bodyFormData
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(model)
         });
 
         if (!response.ok) {
-            const error = new Error("Failed to update a model!");
+            const error = new Error(response.message);
             throw error;
         }
         context.commit('removeModel', {
-            ...data.id
+            ...model.id
         });
         context.commit("updateModel", {
-            ...await response.json()
+            ...model
         });
     }
 };
