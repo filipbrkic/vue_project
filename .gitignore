@@ -1,7 +1,5 @@
 .DS_Store
 node_modules
-cypress
-cypress.config.js
 /dist
 
 
